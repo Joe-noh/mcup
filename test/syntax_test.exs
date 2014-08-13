@@ -102,6 +102,7 @@ defmodule SyntaxTest do
         end
       end
     end
+
     expected = [
       {:section, "Section 1", [
         {:code, "elixir", ["iex> 1+1", "2"]},

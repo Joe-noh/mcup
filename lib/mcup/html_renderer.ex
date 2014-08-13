@@ -1,6 +1,6 @@
 defmodule Mcup.HtmlRenderer do
   def render(article) do
-    render article, 2
+    render(article, 2)
   end
 
   defp render([{:par, content} | rest], n) do
@@ -8,7 +8,7 @@ defmodule Mcup.HtmlRenderer do
   end
 
   defp render([{:cite, content} | rest], n) do
-    "<blockquote>#{render content, n}</blockquote>\n#{render rest, n}"
+    "<blockquote>\n#{render content, n}\n</blockquote>\n#{render rest, n}"
   end
 
   defp render([{:item, content} | rest], n) do
@@ -16,23 +16,23 @@ defmodule Mcup.HtmlRenderer do
   end
 
   defp render([{:table, content} | rest], n) do
-    "<table>#{render content, n}</table>\n#{render rest, n}"
+    "<table>\n#{render content, n}\n</table>\n#{render rest, n}"
   end
 
   defp render([{:section, section_title, content} | rest], n) do
-    "<h#{n}>#{section_title}</h#{n}><div>#{render content, n+1}</div>\n#{render rest, n}"
+    "<h#{n}>#{section_title}</h#{n}>\n<div>\n#{render content, n+1}\n</div>\n#{render rest, n}"
   end
 
   defp render([{:code, lang, content} | rest], n) do
-    "<pre class='#{lang}'><code>#{render content, n}</code></pre>\n#{render rest, n}"
+    "<pre class='#{lang}'><code>\n#{render content, n}\n</code></pre>\n#{render rest, n}"
   end
 
   defp render([{:bullet, content} | rest], n) do
-    "<ul>#{render content, n}</ul>\n#{render rest, n}"
+    "<ul>\n#{render content, n}\n</ul>\n#{render rest, n}"
   end
 
   defp render([{:numbered, content} | rest], n) do
-    "<ol>#{render content, n}</ol>\n#{render rest, n}"
+    "<ol>\n#{render content, n}\n</ol>\n#{render rest, n}"
   end
 
   defp render([{:header, content} | rest], n) do
@@ -46,5 +46,18 @@ defmodule Mcup.HtmlRenderer do
   end
 
   defp render([],   _), do: ""
-  defp render(list, _), do: Enum.join(list, "\n")
+  defp render(list, _) do
+    list |> escape([]) |> Enum.join("\n")
+  end
+
+  defp escape([head | tail], acc) do
+    escaped = head
+      |> String.replace("&",  "&amp;")
+      |> String.replace(">",  "&gt;")
+      |> String.replace("<",  "&lt;")
+      |> String.replace("\"", "&quot:")
+    escape(tail, [escaped | acc])
+  end
+
+  defp escape([], acc), do: Enum.reverse(acc)
 end

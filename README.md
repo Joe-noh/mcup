@@ -38,7 +38,9 @@ begin do
   end
 end
 
-# => """
+# =>
+
+"""
 <h2>Section 1</h2>
 <div>
 <pre class='elixir'><code>
@@ -63,4 +65,5 @@ iex&gt; 1+1
 </table>
 
 </div>
+"""
 ```

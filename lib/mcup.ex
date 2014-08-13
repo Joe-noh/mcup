@@ -1,0 +1,2 @@
+defmodule Mcup do
+end

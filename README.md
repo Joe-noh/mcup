@@ -15,30 +15,31 @@ Markup with Elixir. You underestimate the power of the Elixir Macro.
 ```elixir
 use Mcup
 
-begin do
-  section "Section 1" do
-    code "elixir" do
-      "iex> 1+1"
-      "2"
+article = 
+  begin do
+    section "Section 1" do
+      code "elixir" do
+        "iex> 1+1"
+        "2"
+      end
+      par do
+        "Lorem ipsum"
+      end
+      list :bullet do
+        item "one"
+        item "two"
+      end
     end
-    par do
-      "Lorem ipsum"
-    end
-    list :bullet do
-      item "one"
-      item "two"
+    section "Section 2" do
+      table do
+        th ["one", "two", "three"]
+        td [    1,     2,       3]
+        td [    1,     2,       3]
+      end
     end
   end
-  section "Section 2" do
-    table do
-      th ["one", "two", "three"]
-      td [    1,     2,       3]
-      td [    1,     2,       3]
-    end
-  end
-end
 
-# =>
+Mcup.render(article) # =>
 
 """
 <h2>Section 1</h2>

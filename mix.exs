@@ -4,8 +4,8 @@ defmodule Mcup.Mixfile do
   def project do
     [
       app: :mcup,
-      version: "0.0.1",
-      elixir: "~> 0.15.0",
+      version: "0.0.2",
+      elixir: ">= 1.0.0",
       description: desc,
       package: package,
       deps: deps
